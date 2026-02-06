@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <h2 id="title">Login</h2>
+    <p class="sub" id="sub">Login using your registered email and password.</p>
+
+    <!-- Register only -->
+    <div id="nameBox" class="hide">
+      <label>Full Name</label>
+      <input id="name" placeholder="Enter your name" />
+    </div>
+
+    <label>Email</label>
+    <input id="email" placeholder="Enter email" type="email" />
+
+    <label>Password</label>
+    <input id="password" placeholder="Enter password" type="password" />
+
+    <button id="submitBtn">Login</button>
+    <p id="msg"></p>
+
+    <p class="switch">
+      <span id="switchText">Don't have an account?</span>
+      <button id="switchBtn" type="button">Register</button>
+    </p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
