@@ -8,8 +8,8 @@
 ## 🔥 Preview
 
 <!-- Replace these later with your screenshots -->
-![Login UI](./C:\Users\aryan\login-auth-app\Screenshot 2026-02-06 211139.png)
-![Register UI](./C:\Users\aryan\login-auth-app\Screenshot 2026-02-06 211150.png)
+![Login UI](./image1.png)
+![Register UI](./image2.png)
 
 ---
 
