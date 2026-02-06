@@ -9,7 +9,7 @@
 
 <!-- Replace these later with your screenshots -->
 ![Login UI](./image1.png)
-![Register UI](./image2.png)
+
 
 ---
 
@@ -30,6 +30,7 @@ It includes complete frontend-backend communication and secure database storage.
 - API Integration
 
 ---
+![Register UI](./image2.png)
 
 ## 🏗 Tech Stack
 
