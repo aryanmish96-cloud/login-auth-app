@@ -1,82 +1,93 @@
-# 🌟 ClauseEase: Contract Simplifier & Auth Portal
+<div align="center">
 
-> A secure authentication web application and contract simplifying tool built using **Python (FastAPI) & MySQL**.  
-> Analyze legal documents, get readability scores, and simplify complex clauses with a modern dark-themed UI.
+# 📜 ClauseEase: The Future of Legal Clarity
+### Simplify Complex Contracts with AI-Powered Precision
 
----
-
-## 🔥 Preview
-
-![Dashboard UI](./image1.png)
-
----
-
-## 🧠 Project Overview
-
-ClauseEase is a comprehensive tool designed to help users manage and simplify legal contracts. It combines a robust authentication system with advanced NLP services to provide insights into document complexity.
-
-### Key Features
-- **User Authentication**: Secure registration and login with password hashing.
-- **Contract Analysis**: Upload or paste text to get readability scores.
-- **NLP metrics**: Flesch-Kincaid Grade Level and Gunning Fog Index.
-- **Modern UI**: Sleek dark-mode dashboard with glassmorphism effects.
-- **Document Management**: Securely store and manage uploaded PDF documents.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 🏗 Tech Stack
-
-**Frontend**
-- HTML5 & Vanilla CSS (Custom Design System)
-- JavaScript (Fetch API, DOM Manipulation)
-
-**Backend**
-- Python 3.x
-- FastAPI
-- MySQL Connector
-
-**NLP & ML**
-- NLTK
-- TextStat / spaCy (Readability analysis)
-
-**Security**
-- Passlib (bcrypt) for password hashing
-- Environment variables for sensitive configuration
+<img src="./image1.png" width="800" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);" />
 
 ---
 
-## 🚀 Getting Started
+</div>
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/aryanmish96-cloud/login-auth-app.git
-   ```
+## ✨ Features that Empower You
 
-2. **Install dependencies**
-   ```bash
-   pip install -r backend/requirements.txt
-   ```
+ClauseEase isn't just a text cleaner—it's a comprehensive legal intelligence suite.
 
-3. **Set up Environment Variables**
-   Create a `.env` file in the `backend/` directory:
-   ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=your_password
-   DB_NAME=auth_db
-   ```
-
-4. **Run the application**
-   ```bash
-   cd backend
-   python app.py
-   ```
+*   **⚡ Instant Analysis**: Real-time readability scores using Flesch-Kincaid and Gunning Fog indices.
+*   **🔴 Visual Risk Assessment**: Our dynamic "Risk Gauge" immediately identifies complex legal pitfalls.
+*   **📜 History Dashboard**: Access all your previous analyses in a secure, persistent storage.
+*   **📄 Professional Reports**: Export your findings to crisp, clean PDF documents for sharing.
+*   **🌙 Premium Dark UI**: A glassmorphism-inspired interface designed for clarity and focus.
 
 ---
 
-## ⚙️ System Flow
+## 🏗 System Architecture
 
-1. **Login/Register**: Users sign up or sign in to access the dashboard.
-2. **Upload/Paste**: Users provide contract text or upload a PDF.
-3. **Analyze**: The backend processes the text using NLP services.
-4. **Insights**: Readability scores and simplified insights are displayed on the UI.
+```mermaid
+graph TD
+    A[User / Frontend] -->|REST API| B[FastAPI Backend]
+    B -->|NLP Analysis| C[NLTK & TextStat]
+    B -->|Persistence| D[MySQL Database]
+    B -->|PDF Processing| E[FPDF Library]
+    D -->|History| A
+    E -->|Download| A
+```
+
+---
+
+## 🚀 Experience the Power
+
+### 1. Zero-Entry Threshold
+Just paste your text or drop a PDF. Our engine handles the heavy lifting of cleaning, segmenting, and tokenizing complex legal jargon.
+
+### 2. Deep Insights
+Identify exactly which parts of your contract are "Simple," "Medium," or "High Risk" with our color-coded highlighting engine.
+
+### 3. Persistent Clarity
+Never lose an insight. Every analysis is saved to your secure profile, accessible anywhere.
+
+---
+
+## 🛠 Tech Stack
+
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Frontend** | HTML5, Vanilla CSS | Premium UI & Interaction |
+| **API** | Python / FastAPI | High-Performance Logic |
+| **Logic** | NLTK, spaCy | Natural Language Processing |
+| **Storage** | MySQL | Analysis & User Persistence |
+| **Documents** | FPDF | Report Generation |
+
+---
+
+## ⚙️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/aryanmish96-cloud/login-auth-app.git
+
+# Enter project directory
+cd login-auth-app
+
+# Install Backend Dependencies
+pip install -r backend/requirements.txt
+pip install fpdf
+
+# Launch App
+cd backend
+python app.py
+```
+
+---
+
+<div align="center">
+  <h3>Powered by AI. Built for Clarity.</h3>
+  <p>ClauseEase &copy; 2026</p>
+</div>

@@ -32,6 +32,20 @@ const submitBtn = document.getElementById("submitBtn");
 const switchBtn = document.getElementById("switchBtn");
 const msg = document.getElementById("msg");
 const userNameDisplay = document.getElementById("userName");
+const historyOverlay = document.getElementById("historyOverlay");
+const closeHistory = document.getElementById("closeHistory");
+const historyList = document.getElementById("historyList");
+const gaugeFill = document.getElementById("gaugeFill");
+const complexityPercentage = document.getElementById("complexityPercentage");
+const downloadPdfBtn = document.getElementById("downloadPdfBtn");
+
+let currentUser = JSON.parse(localStorage.getItem("clauseEaseUser")) || null;
+
+if (currentUser) {
+  userNameDisplay.textContent = currentUser.name;
+  publicNav.classList.add("hide");
+  privateNav.classList.remove("hide");
+}
 
 // --- Helper Functions ---
 function setMessage(text, ok = true) {
@@ -162,6 +176,8 @@ submitBtn.addEventListener("click", async () => {
     if (!res.ok) return setMessage(data.message || "Login failed", false);
 
     setMessage("Login successful ✅", true);
+    currentUser = data.user;
+    localStorage.setItem("clauseEaseUser", JSON.stringify(currentUser));
     userNameDisplay.textContent = data.user.name;
 
     // UI Update
@@ -179,12 +195,57 @@ submitBtn.addEventListener("click", async () => {
 
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", () => {
+  currentUser = null;
+  localStorage.removeItem("clauseEaseUser");
   publicNav.classList.remove("hide");
   privateNav.classList.add("hide");
   // Optional: Reset analysis state
   emptyResult.classList.remove("hide");
   analysisResults.classList.add("hide");
 });
+
+// History Logic
+userNameDisplay.addEventListener("click", async () => {
+  if (!currentUser) return;
+  historyOverlay.classList.remove("hide");
+  historyList.innerHTML = "<p>Loading history...</p>";
+
+  try {
+    const res = await fetch(`${API}/api/history?email=${currentUser.email}`);
+    const data = await res.json();
+
+    if (data.length === 0) {
+      historyList.innerHTML = '<p class="empty-history">No history found. Start analyzing to see your past reports.</p>';
+      return;
+    }
+
+    historyList.innerHTML = "";
+    data.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "history-item";
+      div.innerHTML = `
+        <div class="history-info">
+          <span class="history-preview">${item.text_preview}</span>
+          <span class="history-meta">${new Date(item.created_at).toLocaleDateString()}</span>
+        </div>
+        <div class="history-scores">
+          <span class="score-pill">FK: ${item.flesch_score.toFixed(1)}</span>
+          <span class="score-pill">GF: ${item.fog_score.toFixed(1)}</span>
+        </div>
+      `;
+      div.onclick = () => {
+        docText.value = item.text_preview.replace("...", "");
+        historyOverlay.classList.add("hide");
+        analyzeBtn.click();
+      };
+      historyList.appendChild(div);
+    });
+  } catch (err) {
+    historyList.innerHTML = "<p>Error loading history.</p>";
+  }
+});
+
+closeHistory.onclick = () => historyOverlay.classList.add("hide");
 
 // Analysis Logic
 analyzeBtn.addEventListener("click", async () => {
@@ -206,11 +267,18 @@ analyzeBtn.addEventListener("click", async () => {
     if (file && !document.getElementById("uploadTab").classList.contains("hide")) {
       const formData = new FormData();
       formData.append("file", file);
-      res = await fetch(`${API}/api/analyze`, { method: "POST", body: formData });
+      res = await fetch(`${API}/api/analyze`, {
+        method: "POST",
+        body: formData,
+        headers: currentUser ? { "X-User-Email": currentUser.email } : {}
+      });
     } else {
       res = await fetch(`${API}/api/analyze`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-User-Email": currentUser ? currentUser.email : ""
+        },
         body: JSON.stringify({ text })
       });
     }
@@ -222,6 +290,21 @@ analyzeBtn.addEventListener("click", async () => {
     document.getElementById("fkGrade").textContent = data.readability.flesch_kincaid_grade.toFixed(1);
     document.getElementById("gfIndex").textContent = data.readability.gunning_fog.toFixed(1);
     document.getElementById("complexityLabel").textContent = data.complexity_label.split(" ")[0];
+
+    // Update Gauge
+    const fk = data.readability.flesch_reading_ease;
+    // Flesch is 100 (simple) to 0 (complex). We want 0-100 complexity risk.
+    const risk = Math.max(0, Math.min(100, 100 - fk));
+    const rotation = (risk / 100) * 0.5; // 0.5 turns = 180deg
+    gaugeFill.style.transform = `rotate(${0.5 + rotation}turn)`;
+    complexityPercentage.textContent = `${Math.round(risk)}%`;
+
+    // Store current analysis for PDF
+    window.currentAnalysis = {
+      text: data.original_text,
+      flesch: data.readability.flesch_reading_ease.toFixed(1),
+      fog: data.readability.gunning_fog.toFixed(1)
+    };
 
     // Highlights
     highlightContainer.innerHTML = "";
@@ -278,4 +361,32 @@ document.getElementById("themeToggle").addEventListener("click", () => {
   theme = theme === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", theme);
   document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌓";
+});
+
+// PDF Export
+downloadPdfBtn.addEventListener("click", async () => {
+  if (!window.currentAnalysis) return;
+
+  downloadPdfBtn.disabled = true;
+  downloadPdfBtn.innerHTML = "Generating...";
+
+  try {
+    const res = await fetch(`${API}/api/export-pdf`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(window.currentAnalysis)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert("Analysis Report Generated! Opening in new tab...");
+      window.open(`${API}/uploads/${data.filename}`, "_blank");
+    } else {
+      alert("Export failed: " + data.message);
+    }
+  } catch (err) {
+    alert("Export error occurred.");
+  } finally {
+    downloadPdfBtn.disabled = false;
+    downloadPdfBtn.innerHTML = '<span class="btn-icon">📄</span> Download Analysis (PDF)';
+  }
 });

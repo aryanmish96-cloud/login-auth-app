@@ -139,53 +139,64 @@
         </div>
 
         <div id="analysisResults" class="results-layout hide">
+          <div class="metrics-row">
+            <div class="risk-gauge-container">
+              <div class="gauge">
+                <div class="gauge-body">
+                  <div class="gauge-fill" id="gaugeFill"></div>
+                  <div class="gauge-cover">
+                    <span id="complexityPercentage">0%</span>
+                  </div>
+                </div>
+              </div>
+              <span class="gauge-label">Complexity Risk</span>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">Flesch-Kincaid</span>
+                <span id="fkGrade" class="metric-value">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Gunning Fog</span>
+                <span id="gfIndex" class="metric-value">--</span>
+              </div>
+              <div class="metric-card highlighted">
+                <span class="metric-label">Level</span>
+                <span id="complexityLabel" class="metric-value">--</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button id="downloadPdfBtn" class="btn-outline mini-btn">
+              <span class="btn-icon">📄</span> Download Analysis (PDF)
+            </button>
+          </div>
+
           <div class="text-output-card">
-            <div class="output-header">
-              <h3>Color-Coded Analysis</h3>
-              <div class="legend">
-                <span class="leg-item simple">Simple</span>
-                <span class="leg-item normal">Medium</span>
-                <span class="leg-item complex">Complex</span>
-              </div>
-            </div>
-            <div id="highlightedText" class="rendered-text"></div>
-          </div>
 
-          <div class="metrics-grid">
-            <div class="metric-card">
-              <span class="metric-label">Flesch-Kincaid</span>
-              <span id="fkGrade" class="metric-value">--</span>
-            </div>
-            <div class="metric-card">
-              <span class="metric-label">Gunning Fog</span>
-              <span id="gfIndex" class="metric-value">--</span>
-            </div>
-            <div class="metric-card highlighted">
-              <span class="metric-label">Complexity Level</span>
-              <span id="complexityLabel" class="metric-value">--</span>
-            </div>
-          </div>
-
-          <div class="preprocessing-results glass">
-            <div class="tabs mini-tabs">
-              <button class="tab-btn active" data-subtab="cleanedText">Cleaned Text</button>
-              <button class="tab-btn" data-subtab="tokens">Tokens & Structure</button>
-            </div>
-            <div id="cleanedTextContent" class="subtab-content">
-              <div id="cleanedTextOutput" class="small-text-card">Analysis results will show cleaned text here...</div>
-            </div>
-            <div id="tokensContent" class="subtab-content hide">
-              <div class="token-group">
-                <label>Sentence Segmentation</label>
-                <div id="sentenceList" class="token-list"></div>
+            <div class="preprocessing-results glass">
+              <div class="tabs mini-tabs">
+                <button class="tab-btn active" data-subtab="cleanedText">Cleaned Text</button>
+                <button class="tab-btn" data-subtab="tokens">Tokens & Structure</button>
               </div>
-              <div class="token-group">
-                <label>Word Tokenization</label>
-                <div id="wordList" class="token-list chips"></div>
+              <div id="cleanedTextContent" class="subtab-content">
+                <div id="cleanedTextOutput" class="small-text-card">Analysis results will show cleaned text here...
+                </div>
+              </div>
+              <div id="tokensContent" class="subtab-content hide">
+                <div class="token-group">
+                  <label>Sentence Segmentation</label>
+                  <div id="sentenceList" class="token-list"></div>
+                </div>
+                <div class="token-group">
+                  <label>Word Tokenization</label>
+                  <div id="wordList" class="token-list chips"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </section>
 
     </div>

@@ -35,6 +35,18 @@ def init_db():
             password VARCHAR(255) NOT NULL
         )
     """)
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS analysis_history (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            text_preview TEXT,
+            flesch_score FLOAT,
+            fog_score FLOAT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        )
+    """)
     conn.commit()
     cursor.close()
     conn.close()
