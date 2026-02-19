@@ -1,0 +1,22 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment Variables
+.env
+
+# Node.js
+node_modules/
+
+# IDE/Editor
+.vscode/
+
+# Local data/uploads
+backend/uploads/
+image1.png
+image2.png

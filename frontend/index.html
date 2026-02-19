@@ -1,38 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login / Register</title>
+  <title>ClauseEase | Contract Simplifier</title>
   <link rel="stylesheet" href="style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
-<body>
-  <div class="card">
-    <h2 id="title">Login</h2>
-    <p class="sub" id="sub">Login using your registered email and password.</p>
 
-    <!-- Register only -->
-    <div id="nameBox" class="hide">
-      <label>Full Name</label>
-      <input id="name" placeholder="Enter your name" />
+<body data-theme="dark">
+
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <span class="logo-icon">📜</span>
+        <div class="logo-text">
+          <span class="brand-name">ClauseEase</span>
+          <span class="brand-tagline">Contract Simplifier</span>
+        </div>
+      </div>
+
+      <nav class="auth-nav" id="publicNav">
+        <button id="headerLoginBtn" class="btn-text">Login</button>
+        <button id="headerRegisterBtn" class="btn-filled">Register</button>
+      </nav>
+
+      <div class="user-nav hide" id="privateNav">
+        <button id="themeToggle" class="theme-toggle">🌓</button>
+        <div class="user-profile">
+          <span id="userName">User</span>
+          <button id="logoutBtn" class="btn-outline">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Auth Overlay (Modals) -->
+    <div id="authOverlay" class="auth-overlay hide">
+      <div class="auth-card glass">
+        <button class="close-auth" id="closeAuth">&times;</button>
+        <div id="authFormContent">
+          <h2 id="authTitle">Login</h2>
+          <p id="authSub" class="sub">Access your simplified contracts.</p>
+
+          <div id="nameBox" class="input-group hide">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email" />
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password" />
+          </div>
+
+          <button id="submitBtn" class="btn-filled w-100">Login</button>
+          <p id="msg" class="msg-box"></p>
+
+          <p id="switchText" class="switch">Don't have an account? <span id="switchBtn">Register</span></p>
+        </div>
+      </div>
     </div>
 
-    <label>Email</label>
-    <input id="email" placeholder="Enter email" type="email" />
 
-    <label>Password</label>
-    <input id="password" placeholder="Enter password" type="password" />
+    <section id="heroSection" class="hero-section section-reveal delay-1">
+      <div class="hero-content">
+        <h1 class="hero-title">ClauseEase</h1>
+        <p class="hero-subtitle">Contract Simplifier</p>
+        <p class="hero-description">Experience professional-grade legal text analysis. Clean, analyze, and simplify
+          complex documents instantly with our advanced NLP engine.</p>
+        <button id="tryBtn" class="btn-filled hero-btn">Try ClauseEase Now</button>
+      </div>
+    </section>
 
-    <button id="submitBtn">Login</button>
-    <p id="msg"></p>
+    <!-- Application Dashboard -->
+    <div id="appContainer" class="dashboard-grid hide">
 
-    <p class="switch">
-      <span id="switchText">Don't have an account?</span>
-      <button id="switchBtn" type="button">Register</button>
-    </p>
-  </div>
+      <!-- Input Section: Left -->
+      <section class="input-section glass section-reveal delay-1">
+        <div class="section-header">
+          <h2>Analyze Contract</h2>
+          <p>Paste text or upload a document to begin simplification.</p>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="paste">Paste Text</button>
+          <button class="tab-btn" data-tab="upload">Upload File</button>
+        </div>
+
+        <div class="tab-content" id="pasteTab">
+          <textarea id="docText" placeholder="Paste legal clauses or entire contracts here..."></textarea>
+        </div>
+
+        <div class="tab-content hide" id="uploadTab">
+          <div class="drop-zone" id="dropZone">
+            <span class="drop-icon">📁</span>
+            <p>Drop PDF or TXT here</p>
+            <span class="drop-sub">Max size: 10MB</span>
+            <input type="file" id="fileUpload" accept=".txt,.pdf" class="file-input" />
+          </div>
+          <div id="fileNameDisplay" class="file-name-pill hide"></div>
+        </div>
+
+        <button id="analyzeBtn" class="btn-filled primary-btn">
+          <span class="btn-icon">⚡</span> Analyze
+        </button>
+      </section>
+
+      <!-- Analysis Section: Right -->
+      <section class="analysis-section glass hide section-reveal delay-2">
+        <div class="section-header">
+          <h2>Simplification Result</h2>
+          <div class="analysis-controls">
+            <span class="status-dot"></span>
+            <span class="status-label" id="analysisStatus">Ready</span>
+          </div>
+        </div>
+
+        <div id="emptyResult" class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <p>Analysis results will appear here</p>
+        </div>
+
+        <div id="analysisResults" class="results-layout hide">
+          <div class="text-output-card">
+            <div class="output-header">
+              <h3>Color-Coded Analysis</h3>
+              <div class="legend">
+                <span class="leg-item simple">Simple</span>
+                <span class="leg-item normal">Medium</span>
+                <span class="leg-item complex">Complex</span>
+              </div>
+            </div>
+            <div id="highlightedText" class="rendered-text"></div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-label">Flesch-Kincaid</span>
+              <span id="fkGrade" class="metric-value">--</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Gunning Fog</span>
+              <span id="gfIndex" class="metric-value">--</span>
+            </div>
+            <div class="metric-card highlighted">
+              <span class="metric-label">Complexity Level</span>
+              <span id="complexityLabel" class="metric-value">--</span>
+            </div>
+          </div>
+
+          <div class="preprocessing-results glass">
+            <div class="tabs mini-tabs">
+              <button class="tab-btn active" data-subtab="cleanedText">Cleaned Text</button>
+              <button class="tab-btn" data-subtab="tokens">Tokens & Structure</button>
+            </div>
+            <div id="cleanedTextContent" class="subtab-content">
+              <div id="cleanedTextOutput" class="small-text-card">Analysis results will show cleaned text here...</div>
+            </div>
+            <div id="tokensContent" class="subtab-content hide">
+              <div class="token-group">
+                <label>Sentence Segmentation</label>
+                <div id="sentenceList" class="token-list"></div>
+              </div>
+              <div class="token-group">
+                <label>Word Tokenization</label>
+                <div id="wordList" class="token-list chips"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2026 ClauseEase. All rights reserved.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
-</html>
 
+</html>
