@@ -10,7 +10,13 @@
 
 ---
 
-<img src="./image1.png" width="800" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);" />
+````carousel
+![Hero Landing](./hero.png)
+<!-- slide -->
+![Secure Authentication](./login.png)
+<!-- slide -->
+![Intelligent Analysis](./dashboard.png)
+````
 
 ---
 
