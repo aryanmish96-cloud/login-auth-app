@@ -10,13 +10,11 @@
 
 ---
 
-````carousel
-![Hero Landing](./hero.png)
-<!-- slide -->
-![Secure Authentication](./login.png)
-<!-- slide -->
-![Intelligent Analysis](./dashboard.png)
-````
+### 🖥️ Application Preview
+
+<img src="./hero.png" width="800" alt="Hero Landing" style="border-radius: 10px; margin-bottom: 20px;">
+<img src="./login.png" width="800" alt="Secure Authentication" style="border-radius: 10px; margin-bottom: 20px;">
+<img src="./dashboard.png" width="800" alt="Intelligent Analysis" style="border-radius: 10px; margin-bottom: 20px;">
 
 ---
 
